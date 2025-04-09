@@ -3,7 +3,7 @@ library(googleVis)
 library(dplyr)
 library(tidyr)
 
-filmy=read.csv("C:/Users/jj/Documents/ekonom/movie_metadata.csv")
+filmy=read.csv("movie_metadata.csv")
 filmiki=na.omit(filmy)
 sovie=filmiki[!duplicated(filmiki),]
 sovie<- sovie[!(sovie$color== ""), ]
