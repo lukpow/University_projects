@@ -4,9 +4,9 @@ library(grDevices)
 library(shiny)
 library(shinydashboard)
 
-zal=read.csv("C:/Users/jj/Downloads/population_by_region_combined_en.csv")
-egz=read.csv("C:/Users/jj/Documents/egz8.csv")
-biblioteki=read.csv("C:/Users/jj/Downloads/libraries in Poland.csv")
+zal=read.csv("population_by_region_combined_en.csv")
+egz=read.csv("egz8.csv")
+biblioteki=read.csv("libraries in Poland.csv")
 #WOJ=c("Dolnoslaskie","Kujawsko-pomorskie","Lubelskie","Lubuskie","Lodzkie","Malopolskie","Mazowieckie","Opolskie","Podkarpackie","Podlaskie","Pomorskie","Slaskie","Swietokrzyskie","Warminsko-mazurskie","Wielkopolskie","Zachodniopomorskie")
 #biblioteki=data.frame(Voivodeship,biblioteki)
 #bzp=biblioteki[-c(3,5,6,7,9,10,13),]
