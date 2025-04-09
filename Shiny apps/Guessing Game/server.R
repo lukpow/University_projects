@@ -1,4 +1,4 @@
-pro=read.csv("C:/Users/jj/Documents/fajnans/proto.csv",header=TRUE,sep = ",")
+pro=read.csv("proto.csv",header=TRUE,sep = ",")
 qq=as.Date(pro[,2], format="%d/%m/%Y")
 h1=reactiveVal(100)
 h2=reactiveVal(as.numeric(as.Date("2000/12/31")-as.Date("1901/1/1")))
