@@ -1,0 +1,20 @@
+#Zad.5.
+Jednomian=function(n){
+  x=seq(from=0,to=2,by=0.05)
+  l=lapply(1:n, function(p) bquote(x^.(p)))
+  plot(x,type='l',xlim=c(0,2),ylim=c(0,4))
+  k=c()
+  
+  q=sample(1:657,n)
+  for (i in 1:n){
+      k[i]=colours()[q[i]]
+  }
+  
+  for (i in 2:n){
+    points(x,x^i,type='l',col=k[i])
+    
+  }
+  
+  legend("topleft",legend=l,col=k,lwd=1:5)
+}
+Jednomian(5)
