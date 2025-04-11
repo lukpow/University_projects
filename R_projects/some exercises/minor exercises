@@ -1,0 +1,75 @@
+#Zad.1.
+EKST=function(M){
+  return(c(min=which(M==min(M),arr.ind=T),max=which(M==max(M),arr.ind=T)))
+}
+
+#Zad.2.
+Minor=function(M){
+  q=c(M[1])
+  
+  for (i in 2:min(dim(M))){
+    q[i]=det(M[1:i,1:i])
+  }
+  return(q)
+}
+
+
+
+#Zad.3.
+Sym=function(x){
+  if (all(x==rev(x))){
+    return(1)
+}
+  else{
+    return(0)
+}
+}
+
+#Zad.4.
+SymM=function(x){
+  if (all(x==t(x))){
+    return(1)
+  }
+  else{
+    return(0)
+  }
+}
+
+
+#Zad.5
+kostki=function(n,k){
+  q=function(w,e){
+    return(w*e)
+  }
+  p=length(which(outer(1:n,1:n,q)<k))
+  return(p/n^2)
+  }
+
+  #Zad.6
+kostki_uogolnione=function(k1,k2,k){
+  q=function(w,e){
+    return(w+e)
+  }
+  p=length(which(outer(k1,k2,q)<k))
+  return(p/(length(k1)*length(k2)))
+}
+
+#Zad.7.
+Ile=function(n,k){
+  q=c()
+  for (i in 1:n){
+    q[i]=i^2
+  }
+  return(length(which(q%%k==0)))
+}
+
+#Zad.8.
+sumasin=function(n){
+  return(sum(sin(1:n)))
+}
+
+
+#Zad.9
+S=function(x,y){
+  return(sum(x*y))
+}
