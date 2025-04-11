@@ -1,0 +1,23 @@
+x=runif(1000,1,5)
+e=runif(1000,0,1)
+y=3-5*x+x^2+e
+
+cc=c()
+ccc=c()
+for (i in 1:10){
+  to=lm(y~polym(x,degree=i,raw=TRUE))
+  
+  qwe=summary(to)$r.squared
+  aqwe=summary(to)$adj.r.squared
+  print(qwe)
+  cc[i]=qwe
+  ccc[i]=aqwe
+}
+
+
+plot(1:10,cc)
+points(1:10,ccc,col="red")
+
+
+plot(2:10,cc[2:10])
+points(2:10,ccc[2:10],col="red")
