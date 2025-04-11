@@ -1,0 +1,20 @@
+#Zad.10.
+RKr=function(a,b,c){
+  d=b^2-4*a*c
+  if (d==0){
+    return(x=-b/(2*a))
+  }
+  if (d>0){
+    return(c(x1=(-b-sqrt(d))/(2*a),x1=(-b+sqrt(d))/(2*a)))
+  }
+  else{
+    print("Równianie nie ma pierwiastków rzeczywistych")
+  }
+  
+}
+
+RKc=function(a,b,c){
+  d=b^2-4*a*c
+    return(c(x1=(-b-sqrt(as.complex(d)))/(2*a),x1=(-b+sqrt(as.complex(d)))/(2*a)))
+    
+}
