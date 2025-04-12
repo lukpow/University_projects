@@ -1,0 +1,28 @@
+x := proc(a, b, r, f) local aa, bb, q; aa := a; bb := b; while 1 < abs(aa - bb) do q := 1/2*aa + 1/2*bb; if abs(f(q)) <= r then return q; elif f(q)*f(aa) < 0 then bb := q; else aa := q; end if; end do; return 1/2*aa + 1/2*bb; end proc;
+Warning, (in x) `aa` is implicitly declared local
+Warning, (in x) `bb` is implicitly declared local
+Warning, (in x) `q` is implicitly declared local
+x := proc (a, b, r, f) local aa, bb, q; aa := a; bb := b; while 
+
+   1 < abs(aa-bb) do q := (1/2)*aa+(1/2)*bb; if abs(f(q)) <= r 
+
+   then return q elif f(q)*f(aa) < 0 then bb := q else aa := q 
+
+   end if end do; return (1/2)*aa+(1/2)*bb end proc
+
+
+f := x -> x^2 - 2*x - 3;
+   f := proc (x) options operator, arrow; x^2-2*x-3 end proc
+
+
+x(0, 4, 0.5, f);
+                               3
+
+plot(f);
+
+g -> exp(-x) - cos(5*x);
+  proc (g) options operator, arrow; exp(-x)-cos(5*x) end proc
+
+x(0, 100, 0.5, g);
+Error, (in x) cannot determine if this expression is true or false: abs(g(50)) <= .5
+NULL;
