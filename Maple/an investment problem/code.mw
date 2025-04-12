@@ -1,0 +1,457 @@
+restart;
+with(linalg);
+with(stats);
+with(plots);
+[animate, animate3d, animatecurve, arrow, changecoords, 
+
+  complexplot, complexplot3d, conformal, conformal3d, 
+
+  contourplot, contourplot3d, coordplot, coordplot3d, 
+
+  densityplot, display, dualaxisplot, fieldplot, fieldplot3d, 
+
+  gradplot, gradplot3d, implicitplot, implicitplot3d, inequal, 
+
+  interactive, interactiveparams, intersectplot, listcontplot, 
+
+  listcontplot3d, listdensityplot, listplot, listplot3d, 
+
+  loglogplot, logplot, matrixplot, multiple, odeplot, pareto, 
+
+  plotcompare, pointplot, pointplot3d, polarplot, polygonplot, 
+
+  polygonplot3d, polyhedra_supported, polyhedraplot, rootlocus, 
+
+  semilogplot, setcolors, setoptions, setoptions3d, shadebetween, 
+
+  spacecurve, sparsematrixplot, surfdata, textplot, textplot3d, 
+
+  tubeplot]
+
+
+
+with(Statistics);
+[AbsoluteDeviation, AgglomeratedPlot, AreaChart, AutoCorrelation, 
+
+  AutoCorrelationPlot, BarChart, Biplot, Bootstrap, BoxPlot, 
+
+  BubblePlot, CDF, CGF, CentralMoment, CharacteristicFunction, 
+
+  ChiSquareGoodnessOfFitTest, ChiSquareIndependenceTest, 
+
+  ChiSquareSuitableModelTest, ColumnGraph, Correlation, 
+
+  CorrelationMatrix, Correlogram, Count, CountMissing, 
+
+  Covariance, CovarianceMatrix, CrossCorrelation, Cumulant, 
+
+  CumulantGeneratingFunction, CumulativeDistributionFunction, 
+
+  CumulativeProduct, CumulativeSum, CumulativeSumChart, 
+
+  DataSummary, Decile, DensityPlot, Detrend, Difference, 
+
+  DiscreteValueMap, Distribution, ErrorPlot, EvaluateToFloat, 
+
+  Excise, ExpectedValue, ExponentialFit, ExponentialSmoothing, 
+
+  FailureRate, FisherInformation, Fit, FivePointSummary, 
+
+  FrequencyPlot, FrequencyTable, GeometricMean, GridPlot, 
+
+  HarmonicMean, HazardRate, HeatMap, Histogram, HodgesLehmann, 
+
+  Information, InteractiveDataAnalysis, InterquartileRange, 
+
+  InverseSurvivalFunction, Join, KernelDensity, 
+
+  KernelDensityPlot, KernelDensitySample, Kurtosis, 
+
+  LeastTrimmedSquares, Likelihood, LikelihoodRatioStatistic, 
+
+  LineChart, LinearFilter, LinearFit, LogLikelihood, 
+
+  LogarithmicFit, Lowess, MGF, MLE, MakeProcedure, 
+
+  MaximumLikelihoodEstimate, Mean, MeanDeviation, Median, 
+
+  MedianDeviation, MillsRatio, Mode, Moment, 
+
+  MomentGeneratingFunction, MovingAverage, MovingMedian, 
+
+  MovingStatistic, NonlinearFit, NormalPlot, 
+
+  OneSampleChiSquareTest, OneSampleTTest, OneSampleZTest, 
+
+  OneWayANOVA, OrderByRank, OrderStatistic, PCA, PDF, 
+
+  ParetoChart, Percentile, PieChart, PointPlot, PolynomialFit, 
+
+  PowerFit, PredictiveLeastSquares, PrincipalComponentAnalysis, 
+
+  Probability, ProbabilityDensityFunction, ProbabilityFunction, 
+
+  ProbabilityPlot, ProfileLikelihood, ProfileLogLikelihood, 
+
+  QuadraticMean, Quantile, QuantilePlot, Quartile, 
+
+  RandomVariable, Range, Rank, Remove, RemoveInRange, 
+
+  RemoveNonNumeric, RepeatedMedianEstimator, RousseeuwCrouxQn, 
+
+  RousseeuwCrouxSn, Sample, Scale, ScatterPlot, ScatterPlot3D, 
+
+  Score, ScreePlot, Select, SelectInRange, SelectNonNumeric, 
+
+  ShapiroWilkWTest, Shuffle, Skewness, Sort, Specialize, 
+
+  SplitByColumn, StandardDeviation, StandardError, 
+
+  StandardizedMoment, SunflowerPlot, Support, SurfacePlot, 
+
+  SurvivalFunction, SymmetryPlot, Tally, TallyInto, TreeMap, 
+
+  Trim, TrimmedMean, TwoSampleFTest, TwoSamplePairedTTest, 
+
+  TwoSampleTTest, TwoSampleZTest, Variance, Variation, 
+
+  VennDiagram, ViolinPlot, WeibullPlot, WeightedMovingAverage, 
+
+  Winsorize, WinsorizedMean]
+
+
+EmpiricalDistribution(sample, opts);
+              EmpiricalDistribution(sample, opts)
+
+with(combinat, randcomb);
+                           [randcomb]
+
+Rand := proc() evalf(1/1000000000000*rand(), 5); end proc;
+  Rand := proc () evalf((1/1000000000000)*rand(), 5) end proc
+
+Cum := proc(x) local k, n, v; n := vectdim(x); v := array(1 .. n); v[1] := x[1]; for k from 2 to n do v[k] := v[k - 1] + x[k]; end do; evalm(v); end proc;
+ Cum := proc (x) local k, n, v; n := linalg:-vectdim(x); v := 
+
+    array(1 .. n); v[1] := x[1]; for k from 2 to n do v[k] := 
+
+    v[k-1]+x[k] end do; evalm(v) end proc
+
+
+Lookup := proc(x, a) local n, k, ka; n := vectdim(x); ka := 0; for k to n do if x[k] <= a then ka := k; end if; end do; RETURN(ka); end proc;
+Lookup := proc (x, a) local n, k, ka; n := linalg:-vectdim(x); 
+
+   ka := 0; for k to n do if x[k] <= a then ka := k end if end 
+
+   do; RETURN(ka) end proc
+
+
+Simulation := proc(x, p) local k, cp; cp := Cum(p); k := Lookup(cp, Rand()); RETURN(x[k + 1]); end proc;
+   Simulation := proc (x, p) local k, cp; cp := Cum(p); k := 
+
+      Lookup(cp, Rand()); RETURN(x[k+1]) end proc
+
+
+Wealth := proc(f, i, r, p, w0, n) local k, v; v := array(0 .. n); v[0] := w0; for k to n do v[k] := evalf(f*v[k - 1]*Simulation(r, p) + (1 - f)*(1 + 1/100*i)*v[k - 1]); end do; RETURN(v[n]); end proc;
+Wealth := proc (f, i, r, p, w0, n) local k, v; v := array(0 .. 
+
+   n); v[0] := w0; for k to n do v[k] := evalf(f*v[k-1]*Simulati\
+
+  on(r, p)+(1-f)*(1+(1/100)*i)*v[k-1]) end do; RETURN(v[n]) end 
+
+   proc
+
+
+Policies := proc(i, r, p, w0, n) local f, m; lprint('Return_after', n, 'years'); for m from 0 to 10 do f := evalf(1/10*m); printf("%A %6G %-6s %12G\n", 'Fraction_invested', f, 'Return', evalf(Wealth(f, i, r, p, w0, n), 9)); end do; end proc;
+Policies := proc (i, r, p, w0, n) local f, m; lprint('Return_aft\
+
+  er', n, 'years'); for m from 0 to 10 do f := evalf((1/10)*m); 
+
+   printf("%A %6G %-6s %12G\n", 'Fraction_invested', f, 
+
+   'Return', evalf(Wealth(f, i, r, p, w0, n), 9)) end do end proc
+
+
+r := [0, 1, 2];
+p := [0.3, 0.2, 0.5];
+Policies(5, r, p, 1000, 10);
+Return_after, 10, years
+Fraction_invested      0 Return      1628.89
+Fraction_invested    0.1 Return      1655.26
+Fraction_invested    0.2 Return      7208.23
+Fraction_invested    0.3 Return      993.013
+Fraction_invested    0.4 Return       822.96
+Fraction_invested    0.5 Return      290.147
+Fraction_invested    0.6 Return       5268.7
+Fraction_invested    0.7 Return      2.96022
+Fraction_invested    0.8 Return      68.3831
+Fraction_invested    0.9 Return       0.3202
+Fraction_invested      1 Return            0
+
+NULL;
+NULL;
+calstop := proc(x, y) local s; s := 100*x/y - 100; return s; end proc;
+
+Warning, (in calstop) `s` is implicitly declared local
+calstop := proc (x, y) local s; s := 100*x/y-100; return s end 
+
+   proc
+
+
+Policiesmod := proc(i, r, p, w0, n) local f, m; lprint('Return_after', n, 'years'); for m from 0 to 10 do f := evalf(1/10*m); printf("%A %6G %-6s %12G\n", 'Fraction_invested', f, 'Return', convert(calstop(Wealth(f, i, r, p, w0, n), w0), float)); end do; end proc;
+Policiesmod := proc (i, r, p, w0, n) local f, m; lprint('Return_\
+
+  after', n, 'years'); for m from 0 to 10 do f := evalf((1/10)*m\
+
+  ); printf("%A %6G %-6s %12G\n", 'Fraction_invested', f, 
+
+   'Return', convert(calstop(Wealth(f, i, r, p, w0, n), w0), 
+
+   float)) end do end proc
+
+
+Policiesmod(5, r, p, 1000, 10);
+Return_after, 10, years
+Fraction_invested      0 Return      62.8895
+Fraction_invested    0.1 Return      67.0558
+Fraction_invested    0.2 Return      27.3124
+Fraction_invested    0.3 Return      80.3637
+Fraction_invested    0.4 Return      399.886
+Fraction_invested    0.5 Return     -77.8894
+Fraction_invested    0.6 Return     -13.9951
+Fraction_invested    0.7 Return      1316.09
+Fraction_invested    0.8 Return      2343.26
+Fraction_invested    0.9 Return     -99.9953
+Fraction_invested      1 Return         -100
+
+mak := proc(j) local q, w, i; q := op(1, j); w := 0; for i to nops(j) do if q < op(i, j) then w := i; q := op(i, j); end if; end do; return evalf(1/10*w - 1/10); end proc;
+Warning, (in mak) `q` is implicitly declared local
+Warning, (in mak) `w` is implicitly declared local
+Warning, (in mak) `i` is implicitly declared local
+mak := proc (j) local q, w, i; q := op(1, j); w := 0; for i to 
+
+   nops(j) do if q < op(i, j) then w := i; q := op(i, j) end if 
+
+   end do; return evalf((1/10)*w-1/10) end proc
+
+
+szukacz := proc(t, i) local p, j; p := 0; for j to nops(t) do if op(j, t) - i = 0 then p := p + 1; end if; end do; return p; end proc;
+Warning, (in szukacz) `p` is implicitly declared local
+Warning, (in szukacz) `j` is implicitly declared local
+szukacz := proc (t, i) local p, j; p := 0; for j to nops(t) do 
+
+   if op(j, t)-i = 0 then p := p+1 end if end do; return p end 
+
+   proc
+
+
+
+
+Policiesmodd := proc(i, r, p, w0, n) local f, m, t, o; t := []; for m from 0 to 10 do f := evalf(1/10*m); o := calstop(Wealth(f, i, r, p, w0, n), w0); t := [op(t), o]; end do; return t; end proc;
+Warning, (in Policiesmodd) `o` is implicitly declared local
+Policiesmodd := proc (i, r, p, w0, n) local f, m, t, o; t := 
+
+   []; for m from 0 to 10 do f := evalf((1/10)*m); o := 
+
+   calstop(Wealth(f, i, r, p, w0, n), w0); t := [op(t), o] end 
+
+   do; return t end proc
+
+
+najlepsze := proc(y) local t, z, i, j, w, d; t := []; z := []; for i to y do t := [op(t), mak(Policiesmodd(5, r, p, 1000, 10))]; end do; for j to 11 do w := szukacz(t, evalf(1/10*j - 1/10)); z := [op(z), w]; end do; d := mak(z) - 0.1; return d; end proc;
+Warning, (in najlepsze) `t` is implicitly declared local
+Warning, (in najlepsze) `z` is implicitly declared local
+Warning, (in najlepsze) `i` is implicitly declared local
+Warning, (in najlepsze) `j` is implicitly declared local
+Warning, (in najlepsze) `w` is implicitly declared local
+Warning, (in najlepsze) `d` is implicitly declared local
+najlepsze := proc (y) local t, z, i, j, w, d; t := []; z := []; 
+
+   for i to y do t := [op(t), mak(Policiesmodd(5, r, p, 1000, 
+
+   10))] end do; for j to 11 do w := szukacz(t, evalf((1/10)*j-1\
+
+  /10)); z := [op(z), w] end do; d := mak(z)-.1; return d end proc
+
+
+najlepsze(100);
+                          0.6000000000
+
+Y := RandomVariable(EmpiricalDistribution([0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3], 'probabilities' = [0.10, 0.1, 0.1, 0.1, 0.2, 0.1, 0.2, 0.05, 0.04, 0.01]));
+                            Y := _R
+
+Wea := proc(f, i, w0, n) local k, v; v := array(0 .. n); v[0] := w0; for k to n do v[k] := evalf(f*v[k - 1]*Sample(Y, 1)[1] + (1 - f)*(1 + 1/100*i)*v[k - 1]); end do; RETURN(v[n]); end proc;
+Wea := proc (f, i, w0, n) local k, v; v := array(0 .. n); v[0] 
+
+   := w0; for k to n do v[k] := evalf(f*v[k-1]*Statistics:-Sampl\
+
+  e(Y, 1)[1]+(1-f)*(1+(1/100)*i)*v[k-1]) end do; RETURN(v[n]) 
+
+   end proc
+
+
+Pol := proc(i, w0, n) local f, m; lprint('Return_after', n, 'years'); for m from 0 to 10 do f := evalf(1/10*m); printf("%A %6G %-6s %12G\n", 'Fraction_invested', f, 'Return', evalf(Wea(f, i, w0, n), 9)); end do; end proc;
+ Pol := proc (i, w0, n) local f, m; lprint('Return_after', n, 
+
+    'years'); for m from 0 to 10 do f := evalf((1/10)*m); 
+
+    printf("%A %6G %-6s %12G\n", 'Fraction_invested', f, 
+
+    'Return', evalf(Wea(f, i, w0, n), 9)) end do end proc
+
+
+Pol(5, 100, 10);
+Return_after, 10, years
+Fraction_invested      0 Return      162.889
+Fraction_invested    0.1 Return       136.54
+Fraction_invested    0.2 Return      131.467
+Fraction_invested    0.3 Return      86.2086
+Fraction_invested    0.4 Return      436.277
+Fraction_invested    0.5 Return      10.3651
+Fraction_invested    0.6 Return       34.451
+Fraction_invested    0.7 Return      82.0289
+Fraction_invested    0.8 Return      28.1131
+Fraction_invested    0.9 Return      4.24144
+Fraction_invested      1 Return            0
+
+Polmod := proc(i, w0, n) local f, m, t, o; t := []; for m from 0 to 10 do f := evalf(1/10*m); o := evalf(Wea(f, i, w0, n), 9); t := [op(t), o]; end do; return t; end proc;
+Warning, (in Polmod) `o` is implicitly declared local
+Polmod := proc (i, w0, n) local f, m, t, o; t := []; for m from 
+
+   0 to 10 do f := evalf((1/10)*m); o := evalf(Wea(f, i, w0, 
+
+   n), 9); t := [op(t), o] end do; return t end proc
+
+
+dobre := proc(y) local t, z, i, j, w, d; t := []; z := []; for i to y do t := [op(t), mak(Polmod(5, 1000, 10))]; end do; for j to 11 do w := szukacz(t, evalf(1/10*j - 1/10)); z := [op(z), w]; end do; d := mak(z) - 0.1; return d; end proc;
+Warning, (in dobre) `t` is implicitly declared local
+Warning, (in dobre) `z` is implicitly declared local
+Warning, (in dobre) `i` is implicitly declared local
+Warning, (in dobre) `j` is implicitly declared local
+Warning, (in dobre) `w` is implicitly declared local
+Warning, (in dobre) `d` is implicitly declared local
+dobre := proc (y) local t, z, i, j, w, d; t := []; z := []; for 
+
+   i to y do t := [op(t), mak(Polmod(5, 1000, 10))] end do; for 
+
+   j to 11 do w := szukacz(t, evalf((1/10)*j-1/10)); z := 
+
+   [op(z), w] end do; d := mak(z)-.1; return d end proc
+
+
+dobre(50);
+                          0.3000000000
+
+realn := proc(n, i) local q; q := (n - i)/(i + 1); return 100*q; end proc;
+Warning, (in realn) `q` is implicitly declared local
+ realn := proc (n, i) local q; q := (n-i)/(i+1); return 100*q 
+
+    end proc
+
+
+pol := proc(i, w0, n, inf) local f, m; lprint('Return_after', n, 'years'); for m from 0 to 10 do f := evalf(1/10*m); printf("%A %6G %-6s %12G\n", 'Fraction_invested', f, 'Return', realn(0.01*calstop(evalf(Wea(f, i, w0, n), 9), w0), inf)); end do; end proc;
+pol := proc (i, w0, n, inf) local f, m; lprint('Return_after', 
+
+   n, 'years'); for m from 0 to 10 do f := evalf((1/10)*m); 
+
+   printf("%A %6G %-6s %12G\n", 'Fraction_invested', f, 
+
+   'Return', realn(0.1e-1*calstop(evalf(Wea(f, i, w0, n), 9), 
+
+   w0), inf)) end do end proc
+
+
+pol(5, 1000, 10, 0.147);
+Return_after, 10, years
+Fraction_invested      0 Return      42.0135
+Fraction_invested    0.1 Return      2.12013
+Fraction_invested    0.2 Return    -0.200195
+Fraction_invested    0.3 Return      16.5968
+Fraction_invested    0.4 Return     -36.5409
+Fraction_invested    0.5 Return      79.6657
+Fraction_invested    0.6 Return     -5.75294
+Fraction_invested    0.7 Return     -1.83573
+Fraction_invested    0.8 Return     -96.8288
+Fraction_invested    0.9 Return     -99.3413
+Fraction_invested      1 Return      520.675
+
+WWealth := proc(f, i, w0, n, inf) local l, k, v; v := array(0 .. n); v[0] := w0; for k to n do if inf[k] < -0.02 then l := 1; end if; if -0.02 < inf[k] then l := -1; end if; if inf[k] = -0.02 then l := 0; end if; v[k] := evalf(f*v[k - 1]*Sample(Y, 1)[1] + (1 - f)*(1 + 1/100*l + 1/100*i)*v[k - 1]); end do; RETURN(v[n]); end proc;
+WWealth := proc (f, i, w0, n, inf) local l, k, v; v := array(0 
+
+   .. n); v[0] := w0; for k to n do if inf[k] < -0.2e-1 then l 
+
+   := 1 end if; if -0.2e-1 < inf[k] then l := -1 end if; if 
+
+   inf[k] = -0.2e-1 then l := 0 end if; v[k] := evalf(f*v[k-1]*S\
+
+  tatistics:-Sample(Y, 1)[1]+(1-f)*(1+(1/100)*l+(1/100)*i)*v[k-1\
+
+  ]) end do; RETURN(v[n]) end proc
+
+
+X := RandomVariable(EmpiricalDistribution([0, 0.01, -0.02, -0.1, -0.05], 'probabilities' = [0.20, 0.2, 0.2, 0.2, 0.2]));
+                            X := _R0
+
+randomowainflacja := [seq(Sample(X, 1)[1], k = 1 .. 11)];
+randomowainflacja := [0., -0.0500000000000000, 
+
+  -0.100000000000000, -0.100000000000000, 0., 0.0100000000000000, 
+
+  0.0100000000000000, -0.0200000000000000, 0., 
+
+  -0.0200000000000000, 0.0100000000000000]
+
+
+zloto := proc(i, w0, n, inf) local f, m; lprint('Return_after', n, 'years'); for m from 0 to 10 do f := evalf(1/10*m); printf("%A %6G %-6s %12G\n", 'Fraction_invested', f, 'Return', realn(0.01*calstop(WWealth(f, i, w0, n, inf), w0), inf[nops(inf)])); end do; end proc;
+zloto := proc (i, w0, n, inf) local f, m; lprint('Return_after',\
+
+   n, 'years'); for m from 0 to 10 do f := evalf((1/10)*m); 
+
+   printf("%A %6G %-6s %12G\n", 'Fraction_invested', f, 
+
+   'Return', realn(0.1e-1*calstop(WWealth(f, i, w0, n, inf), 
+
+   w0), inf[nops(inf)])) end do end proc
+
+
+zloto(5, 1000, 10, randomowainflacja);
+Return_after, 10, years
+Fraction_invested      0 Return      58.1763
+Fraction_invested    0.1 Return      13.7677
+Fraction_invested    0.2 Return      6.86855
+Fraction_invested    0.3 Return     -30.9914
+Fraction_invested    0.4 Return      -65.279
+Fraction_invested    0.5 Return     -53.3754
+Fraction_invested    0.6 Return     -90.6955
+Fraction_invested    0.7 Return      219.012
+Fraction_invested    0.8 Return      58.4842
+Fraction_invested    0.9 Return     -99.5772
+Fraction_invested      1 Return         -100
+
+NULL;
+
+nominal_pol := proc(i, w0, n) local m, f; for m from 0 to 10 do f := evalf(1/10*m); printf("%A %6G %-6s %12G\n", 'Fraction_invested', f, 'Return', calstop(evalf(Wea(f, i, w0, n), 9), w0)); end do; end proc;
+Warning, (in nominal_pol) `m` is implicitly declared local
+Warning, (in nominal_pol) `f` is implicitly declared local
+ nominal_pol := proc (i, w0, n) local m, f; for m from 0 to 10 
+
+    do f := evalf((1/10)*m); printf("%A %6G %-6s %12G\n", 
+
+    'Fraction_invested', f, 'Return', calstop(evalf(Wea(f, i, 
+
+    w0, n), 9), w0)) end do end proc
+
+
+nominal_pol(5, 1000, 10);
+Fraction_invested      0 Return      62.8895
+Fraction_invested    0.1 Return      77.6499
+Fraction_invested    0.2 Return      93.8002
+Fraction_invested    0.3 Return     -24.3373
+Fraction_invested    0.4 Return     -16.9657
+Fraction_invested    0.5 Return     -79.8806
+Fraction_invested    0.6 Return      17.9024
+Fraction_invested    0.7 Return     -74.9211
+Fraction_invested    0.8 Return     -83.2035
+Fraction_invested    0.9 Return      -89.484
+Fraction_invested      1 Return     -67.1875
+
+NULL;
