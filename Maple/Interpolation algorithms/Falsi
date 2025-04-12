@@ -1,0 +1,29 @@
+x := proc(a, b, f, n) if n = 0 then return (a*f(b) - b*f(a))/(f(b) - f(a)); else if f(a)*f(x(a, b, f, n - 1)) < 0 then return (x(a, b, f, n - 1)*f(a) - a*f(x(a, b, f, n - 1)))/(f(a) - f(x(a, b, f, n - 1))); elif f(b)*f(x(a, b, f, n - 1)) < 0 then return (x(a, b, f, n - 1)*f(b) - b*f(x(a, b, f, n - 1)))/(f(b) - f(x(a, b, f, n - 1))); end if; end if; end proc;
+x := proc (a, b, f, n) if n = 0 then return (a*f(b)-b*f(a))/(f(b\
+
+  )-f(a)) else if f(a)*f(x(a, b, f, n-1)) < 0 then return (x(a, 
+
+   b, f, n-1)*f(a)-a*f(x(a, b, f, n-1)))/(f(a)-f(x(a, b, f, 
+
+   n-1))) elif f(b)*f(x(a, b, f, n-1)) < 0 then return (x(a, b, 
+
+   f, n-1)*f(b)-b*f(x(a, b, f, n-1)))/(f(b)-f(x(a, b, f, n-1))) 
+
+   end if end if end proc
+
+
+f := x -> exp(-x) - cos(5*x);
+f := proc (x) options operator, arrow; exp(-x)-cos(5*x) end proc
+
+evalf(f(2));
+                          0.9744068123
+
+p := evalf(x(0, 10, f, 7));
+Error, (in x) invalid input: f uses a 1st argument, x, which is missing
+exp(-x) - cos(5*x) = 0;
+                             exp(x)
+
+evalf(f(p));
+                          -3.047845404
+
+NULL;
