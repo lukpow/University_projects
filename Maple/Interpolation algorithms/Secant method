@@ -1,0 +1,60 @@
+x := proc(a, b, f, i) if i = 0 then return a; elif i = 1 then return b; else return x(a, b, f, i - 1) - f(x(a, b, f, i - 1))*(x(a, b, f, i - 1) - x(a, b, f, i - 2))/(f(x(a, b, f, i - 1)) - f(x(a, b, f, i - 2))); end if; end proc;
+ x := proc (a, b, f, i) if i = 0 then return a elif i = 1 then 
+
+    return b else return x(a, b, f, i-1)-f(x(a, b, f, 
+
+    i-1))*(x(a, b, f, i-1)-x(a, b, f, i-2))/(f(x(a, b, f, 
+
+    i-1))-f(x(a, b, f, i-2))) end if end proc
+
+
+f := x -> x^3 - 2*x^2 + x - 8;
+ f := proc (x) options operator, arrow; x^3-2*x^2+x-8 end proc
+
+p := evalf(x(0, 4, f, 5));
+                        p := 2.887946484
+
+evalf(f(p));
+                           2.29362873
+
+evalf(solve(x^3 - 2*x^2 + x - 8 = 0, x));
+          2.716188659, -0.3580943293 + 1.678413526 I, 
+
+            -0.3580943293 - 1.678413526 I
+
+
+plot(f);
+
+NULL;
+NULL;
+NULL;
+NULL;
+NULL;
+NULL;
+NULL;
+NULL;
+NULL;
+NULL;
+NULL;
+NULL;
+g := x -> exp(-x) - cos(5*x);
+g := proc (x) options operator, arrow; exp(-x)-cos(5*x) end proc
+
+p := evalf(x(0.001, 5, g, 8));
+                                       -11
+                      p := -1.116293 10   
+
+tan(p) - p;
+                          16.30012337
+
+evalf(g(p));
+                               0.
+
+g(p);
+                               0.
+
+p;
+                                    -11
+                        -1.116293 10   
+
+NULL;
