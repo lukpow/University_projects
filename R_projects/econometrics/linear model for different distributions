@@ -1,0 +1,20 @@
+x=runif(100,0,1)
+eps1=rnorm(100)
+eps2=rexp(100)
+eps3=runif(100)
+eps4=rpois(100,1)
+eps5=rbinom(100,5,0.5)
+ww=function(o){
+  y=5*x+o
+  wg=data.frame(x,y)
+  ee=lm(y~x,wg)
+  qqplot(x,y)
+  return(ee)
+ 
+}
+
+ww(eps1)
+ww(eps2)
+ww(eps3)
+ww(eps4)
+ww(eps5)
